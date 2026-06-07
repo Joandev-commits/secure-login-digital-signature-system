@@ -1,0 +1,34 @@
+import os
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import padding
+
+def aes_encrypt(plaintext, key):
+    iv = os.urandom(16)
+    padder = padding.PKCS7(128).padder()
+    padded = padder.update(plaintext.encode()) + padder.finalize()
+    cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=default_backend())
+    encryptor = cipher.encryptor()
+    ciphertext = encryptor.update(padded) + encryptor.finalize()
+    return iv, ciphertext
+
+def aes_decrypt(iv, ciphertext, key):
+    cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=default_backend())
+    decryptor = cipher.decryptor()
+    padded = decryptor.update(ciphertext) + decryptor.finalize()
+    unpadder = padding.PKCS7(128).unpadder()
+    plaintext = unpadder.update(padded) + unpadder.finalize()
+    return plaintext.decode()
+
+key = os.urandom(32)  # 256-bit key
+message = "SecureLoginSystem"
+
+iv, encrypted = aes_encrypt(message, key)
+decrypted = aes_decrypt(iv, encrypted, key)
+
+print("=== AES-256 Encryption (CBC Mode) ===")
+print(f"Original:  {message}")
+print(f"IV:        {iv.hex()}")
+print(f"Encrypted: {encrypted.hex()}")
+print(f"Decrypted: {decrypted}")
+print(f"\nDecryption successful: {message == decrypted}")

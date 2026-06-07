@@ -1,0 +1,12 @@
+import os
+from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.hazmat.backends import default_backend
+
+# AES key sizes
+print("=== Symmetric Key Generation ===")
+for bits in [128, 192, 256]:
+    key = os.urandom(bits // 8)
+    print(f"AES-{bits} Key: {key.hex()}")
+    print(f"Key Length:  {len(key)} bytes ({bits} bits)\n")
+
+print("Most secure: AES-256 selected for the Secure Login System.")
