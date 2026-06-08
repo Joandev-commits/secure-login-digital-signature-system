@@ -1,8 +1,10 @@
 # Secure Login and Digital Signature System
 
-Advanced Cryptography Project (BIT4138)
+## BIT4138 Advanced Cryptography Project
 
-Features:
+This project is developed as part of the BIT4138 Advanced Cryptography unit.
+
+### Planned Features
 - User Registration
 - User Authentication
 - Password Hashing
@@ -10,5 +12,12 @@ Features:
 - Digital Signatures
 - Signature Verification
 - Security Testing
+
+### Technologies
+- Python
+- SQLite
+- OpenSSL
+- Cryptography Library
+- GitHub
 
 Author: Joan Wairimu
